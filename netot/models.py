@@ -1,14 +1,19 @@
 from django.db import models
 
 
-class RetailerOwner(models.Model):
-    # fname, lname, telephone, email, sector, district, province,
-    pass
+BANK_CHOICES = [
+    
+    ('EQuityBank', 'Equity Bank'),
+    ('CogeBanque', 'CogeBanque'),
+    ('BK', 'Bank of Kigali'),
+    ('GT', 'GT Bank'),
+    ('KCB', 'KCB'),
+]
 
 
 class Gas(models.Model):
 
-    CHOISES = [
+    CYLINDER_CHOISES = [
         ('6kg' , '6kg'),
         ('12kg', '12kg'),
         ('15kg', '15kg'),
@@ -21,13 +26,17 @@ class Gas(models.Model):
     gas_flow = models.FloatField()                              # in Millilitters
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    cylinder_type = models.CharField(choices=CHOICES, default='6kg')
+    cylinder_type = models.CharField(choices=CYLINDER_CHOISES, default='6kg')
 
 
 class Retailer(models.Model):
+    owner_name =  models.CharField(max_length=30)
     name = models.CharField(max_length=20)
     tin_number = models.IntegerField()
     location = models.CharField()                               # TO-DO: must become PointField using GIS.
+    bank = models.CharField(choices=BANK_CHOICES)
+    bank_account = models.IntegerField(blank=True)
+    gas_importer = models.CharField(max_length=100)
 
 class Household(models.Model):
     # fname, lname, email, telephone, sector, district, Province, Bank account, account_number
@@ -39,5 +48,7 @@ class Household(models.Model):
     #district = models.CharField(choice=)
     #sector = models.CharField(choice=)
     gaz = models.ForeignKey('Gas', on_delete=models.CASCADE)
+    bank = models.CharField(choices=BANK_CHOICES, blank=True)
+    bank_account = models.IntegerField(blank=True)
 
 
