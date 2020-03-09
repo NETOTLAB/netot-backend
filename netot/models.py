@@ -22,19 +22,22 @@ class Gas(models.Model):
     ]
 
     device_id = models.CharField(max_length=20, unique=True)
-    location = models.CharField()                               # TO-DO: must become PointField using GIS.
+    location = models.CharField(max_length=10)                               # TO-DO: must become PointField using GIS.
     gas_flow = models.FloatField()                              # in Millilitters
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    cylinder_type = models.CharField(choices=CYLINDER_CHOISES, default='6kg')
+    cylinder_type = models.CharField(choices=CYLINDER_CHOISES, default='6kg', max_length=5)
+
+    def __str__(self):
+        return self.device_id
 
 
 class Retailer(models.Model):
-    owner_name =  models.CharField(max_length=30)
     name = models.CharField(max_length=20)
+    owner_name =  models.CharField(max_length=30)
     tin_number = models.IntegerField()
-    location = models.CharField()                               # TO-DO: must become PointField using GIS.
-    bank = models.CharField(choices=BANK_CHOICES)
+    location = models.CharField(max_length=10)                               # TO-DO: must become PointField using GIS.
+    bank = models.CharField(choices=BANK_CHOICES, max_length=20)
     bank_account = models.IntegerField(blank=True)
     gas_importer = models.CharField(max_length=100)
 
@@ -48,7 +51,7 @@ class Household(models.Model):
     #district = models.CharField(choice=)
     #sector = models.CharField(choice=)
     gaz = models.ForeignKey('Gas', on_delete=models.CASCADE)
-    bank = models.CharField(choices=BANK_CHOICES, blank=True)
+    bank = models.CharField(choices=BANK_CHOICES, blank=True, max_length=20)
     bank_account = models.IntegerField(blank=True)
 
 
