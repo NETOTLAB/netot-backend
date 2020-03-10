@@ -15,8 +15,8 @@ def device_data(request):
     
     if request.method == 'POST':
         print("Here's the data: ", request.body) # Logo to a file
-        print("################")
-        logger.warning('This is something')
+        logger.warning("Here's Data")
+        logger.warning(request.body)
         return HttpResponse('Done')
     
     else:
