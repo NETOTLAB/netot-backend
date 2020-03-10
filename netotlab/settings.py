@@ -121,18 +121,29 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+#Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+
+    'formatters': {
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+    },
+
     'handlers': {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
+            'formatter': 'simple',
         },
     },
+
     'loggers': {
-        'django': {
+        'test_logger': {
             'handlers': ['file'],
             'level': 'INFO',
             'propagate': True,
